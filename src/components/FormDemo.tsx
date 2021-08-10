@@ -1,5 +1,6 @@
 import {
 	Box,
+	Button,
 	Card,
 	CardContent,
 	FormGroup,
@@ -7,14 +8,14 @@ import {
 	TextField,
 	Typography,
 } from '@material-ui/core';
-import { Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { InvestmentDetails } from '../types';
 import { object, string, number, boolean, array, mixed } from 'yup';
 import MyCheckbox from './Checkbox';
 
 const initialValues: InvestmentDetails = {
 	fullName: '',
-	initialInvestment: undefined,
+	initialInvestment: 0,
 	investmentRisk: [],
 	commentAboutInvestmentRisk: '',
 	dependents: -1,
@@ -29,7 +30,7 @@ const FormDemo = () => {
 				<Formik
 					validationSchema={object({
 						fullName: string().required().min(2).max(100),
-						initialInvestment: number().required().min(0),
+						initialInvestment: number().required().min(1),
 						dependents: number().required().min(0).max(5),
 						acceptedTermsAndConditions: boolean().oneOf([true]),
 						investmentRisk: array(
@@ -43,13 +44,23 @@ const FormDemo = () => {
 						}),
 					})}
 					initialValues={initialValues}
-					onSubmit={() => {}}
+					onSubmit={(values, formikHelpers) => {
+						return new Promise((resolve) => {
+							setTimeout(() => {
+								console.log(values);
+								console.log(formikHelpers);
+								console.log('---------');
+								resolve(1);
+							}, 5000);
+						});
+					}}
 				>
-					{({ values, errors }) => (
+					{({ values, errors, isSubmitting }) => (
 						<Form>
 							<Box marginBottom={2}>
 								<FormGroup>
 									<Field name='fullName' as={TextField} label='Full Name' />
+									<ErrorMessage name='fullName' />
 								</FormGroup>
 							</Box>
 
@@ -61,6 +72,7 @@ const FormDemo = () => {
 										type='number'
 										label='Initial Investment'
 									/>
+									<ErrorMessage name='initialInvestment' />
 								</FormGroup>
 							</Box>
 
@@ -75,6 +87,7 @@ const FormDemo = () => {
 										label='Medium'
 									/>
 									<MyCheckbox name='investmentRisk' value='Low' label='Low' />
+									<ErrorMessage name='investmentRisk' />
 								</FormGroup>
 							</Box>
 
@@ -85,9 +98,10 @@ const FormDemo = () => {
 										name='commentAboutInvestmentRisk'
 										label='Comment about Investment Risk'
 										multiline
-										rows={3}
-										rowsMax={10}
+										minRows={3}
+										maxRows={10}
 									/>
+									<ErrorMessage name='commentAboutInvestmentRisk' />
 								</FormGroup>
 							</Box>
 							{/* <Field
@@ -117,6 +131,7 @@ const FormDemo = () => {
 										label='Dependents'
 										select
 									>
+										<MenuItem value={-1}>Select...</MenuItem>
 										<MenuItem value={0}>0</MenuItem>
 										<MenuItem value={1}>1</MenuItem>
 										<MenuItem value={2}>2</MenuItem>
@@ -124,6 +139,7 @@ const FormDemo = () => {
 										<MenuItem value={4}>4</MenuItem>
 										<MenuItem value={5}>5</MenuItem>
 									</Field>
+									<ErrorMessage name='dependents' />
 								</FormGroup>
 							</Box>
 
@@ -133,6 +149,7 @@ const FormDemo = () => {
 										name='acceptedTermsAndConditions'
 										label='Accepted terms and conditions'
 									/>
+									<ErrorMessage name='acceptedTermsAndConditions' />
 								</FormGroup>
 							</Box>
 							{/* <Field
@@ -140,6 +157,10 @@ const FormDemo = () => {
 								name='acceptedTermsAndConditions'
 								label='Accepted terms and conditions'
 							/> */}
+
+							<Button type='submit' disabled={isSubmitting}>
+								Submit
+							</Button>
 
 							<pre>{JSON.stringify(errors, null, 4)}</pre>
 							<pre>{JSON.stringify(values, null, 4)}</pre>
