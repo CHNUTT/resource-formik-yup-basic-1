@@ -1,7 +1,16 @@
-import { Card, CardContent, Typography } from '@material-ui/core';
+import {
+	Card,
+	CardContent,
+	Checkbox,
+	FormControlLabel,
+	MenuItem,
+	TextField,
+	Typography,
+} from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { InvestmentDetails } from '../types';
+import MyCheckbox from './Checkbox';
 
 const initialValues: InvestmentDetails = {
 	fullName: '',
@@ -20,25 +29,66 @@ const FormDemo = () => {
 				<Formik initialValues={initialValues} onSubmit={() => {}}>
 					{({ values }) => (
 						<Form>
-							<Field name='fullName' />
-							<Field name='initialInvestment' type='number' />
+							<Field name='fullName' as={TextField} label='Full Name' />
+							<Field
+								as={TextField}
+								name='initialInvestment'
+								type='number'
+								label='Initial Investment'
+							/>
 
-							<Field name='investmentRisk' value='High' type='checkbox' />
-							<Field name='investmentRisk' value='Mediun' type='checkbox' />
-							<Field name='investmentRisk' value='Low' type='checkbox' />
+							{/* <FormControlLabel control={<Checkbox />} label='Secondary' /> */}
 
-							<Field name='commentAboutInvestmentRisk' as='textarea' />
+							<MyCheckbox name='investmentRisk' value='High' label='High' />
+							<MyCheckbox name='investmentRisk' value='Medium' label='Medium' />
+							<MyCheckbox name='investmentRisk' value='Low' label='Low' />
 
-							<Field name='dependents' as='select'>
-								<option value={0}>0</option>
-								<option value={1}>1</option>
-								<option value={2}>2</option>
-								<option value={3}>3</option>
-								<option value={4}>4</option>
-								<option value={5}>5</option>
+							{/* <Field
+								as={MyCheckbox}
+								name='investmentRisk'
+								label='High'
+								value='High'
+							/>
+							<Field
+								as={MyCheckbox}
+								name='investmentRisk'
+								label='Medium'
+								value='Medium'
+							/>
+							<Field
+								as={MyCheckbox}
+								name='investmentRisk'
+								label='Low'
+								value='Low'
+							/>
+
+							<Field
+								as={TextField}
+								name='commentAboutInvestmentRisk'
+								multiline
+								rows={3}
+								rowsMax={10}
+							/> */}
+
+							<Field as={TextField} name='dependents' select>
+								<MenuItem value={0}>0</MenuItem>
+								<MenuItem value={1}>1</MenuItem>
+								<MenuItem value={2}>2</MenuItem>
+								<MenuItem value={3}>3</MenuItem>
+								<MenuItem value={4}>4</MenuItem>
+								<MenuItem value={5}>5</MenuItem>
 							</Field>
 
-							<Field name='acceptedTermsAndConditions' type='checkbox' />
+							<MyCheckbox
+								name='acceptedTermsAndConditions'
+								label='Accepted terms and conditions'
+							/>
+
+							{/* <Field
+								as={MyCheckbox}
+								name='acceptedTermsAndConditions'
+								label='Accepted terms and conditions'
+							/> */}
 
 							<pre>{JSON.stringify(values, null, 4)}</pre>
 						</Form>
