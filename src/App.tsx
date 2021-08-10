@@ -1,11 +1,11 @@
-import './App.css';
+import { Container } from '@material-ui/core';
 import FormDemo from './components/FormDemo';
 
 function App() {
 	return (
-		<div className='App'>
+		<Container>
 			<FormDemo />
-		</div>
+		</Container>
 	);
 }
 
