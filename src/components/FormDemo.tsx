@@ -1,8 +1,8 @@
 import {
+	Box,
 	Card,
 	CardContent,
-	Checkbox,
-	FormControlLabel,
+	FormGroup,
 	MenuItem,
 	TextField,
 	Typography,
@@ -29,20 +29,35 @@ const FormDemo = () => {
 				<Formik initialValues={initialValues} onSubmit={() => {}}>
 					{({ values }) => (
 						<Form>
-							<Field name='fullName' as={TextField} label='Full Name' />
-							<Field
-								as={TextField}
-								name='initialInvestment'
-								type='number'
-								label='Initial Investment'
-							/>
+							<Box marginBottom={2}>
+								<FormGroup>
+									<Field name='fullName' as={TextField} label='Full Name' />
+								</FormGroup>
+							</Box>
+
+							<Box marginBottom={2}>
+								<FormGroup>
+									<Field
+										as={TextField}
+										name='initialInvestment'
+										type='number'
+										label='Initial Investment'
+									/>
+								</FormGroup>
+							</Box>
 
 							{/* <FormControlLabel control={<Checkbox />} label='Secondary' /> */}
-
-							<MyCheckbox name='investmentRisk' value='High' label='High' />
-							<MyCheckbox name='investmentRisk' value='Medium' label='Medium' />
-							<MyCheckbox name='investmentRisk' value='Low' label='Low' />
-
+							<Box marginBottom={2}>
+								<FormGroup>
+									<MyCheckbox name='investmentRisk' value='High' label='High' />
+									<MyCheckbox
+										name='investmentRisk'
+										value='Medium'
+										label='Medium'
+									/>
+									<MyCheckbox name='investmentRisk' value='Low' label='Low' />
+								</FormGroup>
+							</Box>
 							{/* <Field
 								as={MyCheckbox}
 								name='investmentRisk'
@@ -69,21 +84,27 @@ const FormDemo = () => {
 								rows={3}
 								rowsMax={10}
 							/> */}
+							<Box marginBottom={2}>
+								<FormGroup>
+									<Field as={TextField} name='dependents' select>
+										<MenuItem value={0}>0</MenuItem>
+										<MenuItem value={1}>1</MenuItem>
+										<MenuItem value={2}>2</MenuItem>
+										<MenuItem value={3}>3</MenuItem>
+										<MenuItem value={4}>4</MenuItem>
+										<MenuItem value={5}>5</MenuItem>
+									</Field>
+								</FormGroup>
+							</Box>
 
-							<Field as={TextField} name='dependents' select>
-								<MenuItem value={0}>0</MenuItem>
-								<MenuItem value={1}>1</MenuItem>
-								<MenuItem value={2}>2</MenuItem>
-								<MenuItem value={3}>3</MenuItem>
-								<MenuItem value={4}>4</MenuItem>
-								<MenuItem value={5}>5</MenuItem>
-							</Field>
-
-							<MyCheckbox
-								name='acceptedTermsAndConditions'
-								label='Accepted terms and conditions'
-							/>
-
+							<Box marginBottom={2}>
+								<FormGroup>
+									<MyCheckbox
+										name='acceptedTermsAndConditions'
+										label='Accepted terms and conditions'
+									/>
+								</FormGroup>
+							</Box>
 							{/* <Field
 								as={MyCheckbox}
 								name='acceptedTermsAndConditions'
