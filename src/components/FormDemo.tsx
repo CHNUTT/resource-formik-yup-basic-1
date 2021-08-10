@@ -55,7 +55,7 @@ const FormDemo = () => {
 						});
 					}}
 				>
-					{({ values, errors, isSubmitting }) => (
+					{({ values, errors, isSubmitting, isValidating }) => (
 						<Form>
 							<Box marginBottom={2}>
 								<FormGroup>
@@ -158,7 +158,7 @@ const FormDemo = () => {
 								label='Accepted terms and conditions'
 							/> */}
 
-							<Button type='submit' disabled={isSubmitting}>
+							<Button type='submit' disabled={isSubmitting || isValidating}>
 								Submit
 							</Button>
 
